@@ -1,4 +1,5 @@
 import 'package:dezzex/Screens/activities_screen.dart';
+import 'package:dezzex/Screens/confirmation_screen.dart';
 import 'package:dezzex/Screens/expenses_screen.dart';
 import 'package:dezzex/Screens/password_screen.dart';
 import 'package:dezzex/Screens/payment_screen.dart';
@@ -185,9 +186,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           dashboardButton(
                               size: size,
-                              icon: Icons.credit_card,
-                              title: "Your Cards",
-                              func: () {}),
+                              icon: Icons.confirmation_number,
+                              title: "Confirmation",
+                              func: () {  Get.to(const ConfirmationScreen(),
+                                  transition: Transition.cupertino);}),
                           dashboardButton(
                               size: size,
                               icon: Icons.credit_card,
