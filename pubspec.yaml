@@ -51,6 +51,7 @@ dev_dependencies:
   syncfusion_flutter_gauges: ^19.1.69
   pin_keyboard:
   pinput: ^2.2.12
+  http: ^0.13.5
 
 
 # For information on the generic Dart part of this file, see the
