@@ -4,6 +4,8 @@ import 'package:dezzex/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Controllers/controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -12,8 +14,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController userNameController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
+  Controller controller=Get.put(Controller());
   @override
   Widget build(BuildContext context) {
+    controller=Get.put(Controller());
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -69,11 +75,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: Colors.white),
-                      child: const TextField(
+                      child:  TextField(
+                        controller: userNameController,
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(
+                        keyboardType: TextInputType.emailAddress,
+
+                        decoration: const InputDecoration(
                           hintText: "Username or Email",
-                          hintStyle: TextStyle(color: Color(0xff82BDC2)),
+                          hintStyle: const TextStyle(color: Color(0xff82BDC2)),
                           border: InputBorder.none,
                         ),
                       ),
@@ -85,10 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: Colors.white),
-                      child: const TextField(
+                      child:  TextField(
+                        keyboardType: TextInputType.visiblePassword,
+
+                        controller: passwordController,
                         obscureText: true,
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(color: Color(0xff82BDC2)),
                           border: InputBorder.none,
@@ -103,7 +115,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(50))),
                       color: const Color(0xffF75B45),
                       onPressed: () {
-                        Get.to(const DashboardScreen(),transition: Transition.cupertino);
+                     //   Get.to(const DashboardScreen(),transition: Transition.cupertino);
+                        if(userNameController.text.isEmpty)
+                          {
+                            Get.snackbar("Error", "Please Enter Username");
+                          }
+                        else
+                          {
+                            if(passwordController.text.isEmpty)
+                              {
+                                Get.snackbar("Error", "Please Enter Password");
+
+                              }
+                            else
+                              {
+                               // Get.to(DashboardScreen());
+                                controller.login(username: userNameController.text,password: passwordController.text);
+                              }
+                          }
                       },
                       child: const Text(
                         "SIGN IN",

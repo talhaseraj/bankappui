@@ -7,6 +7,7 @@ import 'package:dezzex/Screens/transfer_screen.dart';
 import 'package:dezzex/Screens/your_cards_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../Controllers/controller.dart';
 import '../global_colors.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +19,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+Controller controller =Get.put(Controller());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -79,9 +81,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children:  [
                             Text(
-                              "KARINA BUYS",
+                              "${controller.loginResponse.username}",
                               style: TextStyle(
                                   color: Color(0xff0A7891),
                                   fontWeight: FontWeight.bold,

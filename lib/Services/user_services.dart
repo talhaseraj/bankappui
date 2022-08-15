@@ -1,4 +1,4 @@
-import 'package:dezzex/Models/user_details.dart';
+import 'package:dezzex/Models/login_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:dezzex/urls.dart';
@@ -22,7 +22,7 @@ class LoginService {
       if (kDebugMode) {
         print("login service********");
       }
-      return userDetailsFromJson(jsonString);
+      return loginResponseFromJson(jsonString);
     } else {
       if (kDebugMode) {
         print("error");
@@ -50,7 +50,7 @@ class LoginService {
       if (kDebugMode) {
         print("login service********");
       }
-      return userDetailsFromJson(jsonString);
+      return loginResponseFromJson(jsonString);
     } else {
       if (kDebugMode) {
         print("error");

@@ -2,6 +2,8 @@ import 'package:dezzex/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Controllers/controller.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
@@ -10,6 +12,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  Controller controller = Get.put(Controller());
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController bankAccountController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool passVis = true;
   bool checkBox = false;
 
@@ -42,10 +50,12 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 40,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.name,
+                    controller: usernameController,
+                    decoration: const InputDecoration(
                         hintText: "Your Name",
                         contentPadding: EdgeInsets.only(left: 10),
                         border: OutlineInputBorder())),
@@ -53,10 +63,12 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 15,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
-                    decoration: InputDecoration(
+                    controller: bankAccountController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
                         hintText: "Bank Account",
                         contentPadding: EdgeInsets.only(left: 10),
                         border: OutlineInputBorder())),
@@ -64,10 +76,12 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 15,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
-                    decoration: InputDecoration(
+                    controller: phoneNumberController,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
                         hintText: "Mobile phone number",
                         contentPadding: EdgeInsets.only(left: 10),
                         border: OutlineInputBorder())),
@@ -75,10 +89,12 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 15,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
-                    decoration: InputDecoration(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
                         hintText: "Email",
                         contentPadding: EdgeInsets.only(left: 10),
                         border: OutlineInputBorder())),
@@ -89,6 +105,8 @@ class _SignupScreenState extends State<SignupScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
                     obscureText: passVis,
                     decoration: InputDecoration(
                         suffixIcon: InkWell(
@@ -139,44 +157,71 @@ class _SignupScreenState extends State<SignupScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 width: size.width * .8,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                  MaterialButton(
-                    minWidth: size.width*.35,
-
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    color: const Color(0xffF75B45),
-                    onPressed: () {},
-                    child: const Text(
-                      "SIGN UP",
-                      style:  TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 3),
-                    ),
-
-                  ),
-                const Text("or"),
                       MaterialButton(
-                        minWidth: size.width*.35,
+                        minWidth: size.width * .35,
                         shape: const RoundedRectangleBorder(
-                          side: BorderSide(color: Color(0xff17839F)),
-                            borderRadius: BorderRadius.all(Radius.circular(50))),
-                        color:  Colors.white,
-                        onPressed: () {},
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50))),
+                        color: const Color(0xffF75B45),
+                        onPressed: () {
+                          if (usernameController.text.isEmpty) {
+                            Get.snackbar("Error", "Please Enter Username");
+                          } else if (bankAccountController.text.isEmpty) {
+                            Get.snackbar("Error", "Please Enter Bank Account");
+                          } else if (phoneNumberController.text.isEmpty) {
+                            Get.snackbar(
+                                "Error", "Please Enter Mobile Phone Number");
+                          } else if (emailController.text.isEmpty) {
+                            Get.snackbar("Error", "Please Enter Email");
+                          } else if (passwordController.text.isEmpty) {
+                            Get.snackbar("Error", "Please Enter Password");
+                          } else if (!checkBox) {
+                            Get.snackbar(
+                                "Error", "Please Agree Terms and conditions");
+                          } else {
+                            controller.register(
+                                password: passwordController.text,
+                                username: usernameController.text,
+                                email: emailController.text,
+                                bankaccount: bankAccountController.text,
+                                phonenumber: phoneNumberController.text);
+                          }
+                        },
+                        child: const Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 3),
+                        ),
+                      ),
+                      const Text("or"),
+                      MaterialButton(
+                        minWidth: size.width * .35,
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(color: Color(0xff17839F)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50))),
+                        color: Colors.white,
+                        onPressed: () {
+
+                          Get.back();
+                        },
                         child: const Text(
                           "CANCEL",
-                          style:  TextStyle(
+                          style: TextStyle(
                               color: Color(0xff17839F),
                               fontWeight: FontWeight.bold,
                               letterSpacing: 3),
                         ),
-
                       ),
                     ]),
               ),
@@ -184,26 +229,28 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 40,
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Get.back();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const[
+                  children: const [
                     Text(
                       "Alread Signed Up? ",
-                      style:  TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff007A9B),
                       ),
                     ),
                     Text(
                       "Sign In",
-                      style:  TextStyle(
+                      style: TextStyle(
                           fontSize: 16,
                           color: Colors.blueAccent,
                           decoration: TextDecoration.underline),
-                    ),],),
+                    ),
+                  ],
+                ),
               ),
             ]),
           ),
