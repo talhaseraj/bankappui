@@ -83,7 +83,7 @@ Controller controller =Get.put(Controller());
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children:  [
                             Text(
-                              "${controller.loginResponse.username}",
+                              "Talha Seraj",
                               style: TextStyle(
                                   color: Color(0xff0A7891),
                                   fontWeight: FontWeight.bold,

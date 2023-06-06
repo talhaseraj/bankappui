@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             else
                               {
                                // Get.to(DashboardScreen());
-                                controller.login(username: userNameController.text,password: passwordController.text);
+                                Get.to(DashboardScreen());
                               }
                           }
                       },
